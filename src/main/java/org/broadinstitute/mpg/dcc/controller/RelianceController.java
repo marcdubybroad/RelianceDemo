@@ -8,13 +8,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.logging.Logger;
 
 /**
  * Created by mduby on 6/30/16.
  */
 @RestController
 public class RelianceController {
+    // static instance variables
+    private final Logger controllerLog = Logger.getLogger(this.getClass().getName());
 
+    // instance variables
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
 
@@ -46,6 +50,9 @@ public class RelianceController {
     @RequestMapping("/results")
     public RestResultBean burdenResults(@RequestParam(value="name", defaultValue="World") String name) {
         RestResultBean restResultBean = new RestResultBean();
+
+        // log
+        this.controllerLog.info("started /results REST call");
 
         // add 1 bean
         VariantResultBean resultBean = new VariantResultBean();
