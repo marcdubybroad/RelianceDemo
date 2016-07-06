@@ -7,6 +7,7 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 
 /**
  * Concrete class to translate from the DCC json format to the Intel format
@@ -35,6 +36,17 @@ public class DccToIntelJsonTranslator {
 
         // get the variants collection
         if (dccInputObject.containsKey(DccServiceConstants.Json.VARIANTS_KEY)) {
+            // pull out the variants object
+            JsonValue tempValue = dccInputObject.get(DccServiceConstants.Json.VARIANTS_KEY);
+            if (tempValue.getValueType() == JsonValue.ValueType.ARRAY) {
+                // create a json object and add the array
+                objectBuilder = Json.createObjectBuilder();
+                objectBuilder.add(DccServiceConstants.Json.VARIANTS_KEY, dccInputObject.get(DccServiceConstants.Json.VARIANTS_KEY));
+                intellJsonObject = objectBuilder.build();
+
+            } else {
+                throw new DccServiceException("Got incorrect json type for variants array: " + dccInputObject.get(DccServiceConstants.Json.VARIANTS_KEY) + " with type: " + dccInputObject.get(DccServiceConstants.Json.VARIANTS_KEY).getValueType());
+            }
 
         } else {
             // create the builders
