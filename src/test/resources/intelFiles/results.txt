@@ -1,0 +1,13 @@
+numCases=109
+numControls=86
+numCaseCarriers=1
+numControlCarriers=1
+numCaseVariants=1
+numControlVariants=1
+numInputVariants=10
+pValue=0.4699
+beta=-1.0748
+stdError=1.4872
+ciLevel=0.95
+ciLower=-3.989712
+ciUpper=1.8401120000000002

@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+RESULT_DOWNLOADER_LOG_PATH=/var/log/download_result.log
+QUERY_PARAMS_FILE=$1
+RESULT_PATH=$2
+
+function usage() {
+    echo -e "==============================================================="
+    echo -e "RP Interface for executing Query"
+    echo -e "Usage: bash $0 <input=variants.json> <output=results.txt> \n"
+    echo -e "Where input   : path for variants.json file"
+    echo -e "      output  : path where result of the query will be stored"
+    echo -e "==============================================================="
+    exit 1
+}
+
+if [ "$1" == "--help" ] || [ "$1" == "-h" ]
+then
+    usage
+elif [ "$#" -ne 2 ]
+then
+    usage
+fi
+
+# get RP Server URL
+t2d_portal_config_file=/opt/rp/rp_config/t2d_portal.cfg
+rp_workflow_endpoint=$(cat ${t2d_portal_config_file} | grep rp_workflow_endpoint | awk -F= '{print $2}')
+echo "workflow endpoint: ${rp_workflow_endpoint}"
+if [ "$rp_workflow_endpoint" == "" ]
+then
+    echo "Invalid RP Servicies URL. Please check T2D portal configuratoin file that rp_workflow_endpoint is updated correctly."
+    exit 1
+fi
+
+# get current workflow id
+url_for_wf_id=${rp_workflow_endpoint}/current_id
+workflow_id=$(curl -s ${rp_workflow_endpoint}/current_id | grep 'workflow_id' | awk '{print $2}' | tr -d '"')
+echo "Workflow Id is ${workflow_id}"
+
+if [ "$workflow_id" == "null" ] || [ "$workflow_id" == "" ]
+then
+    echo "Invalid workflow id. Can not submit query with invalid workflow id"
+    exit 1
+fi
+
+# upload query parameters file
+rp_dataset_endpoint=$(cat ${t2d_portal_config_file} | grep rp_data_upload_endpoint | awk -F= '{print $2}')
+python /opt/rp/t2d_portal/upload_query_params.py ${rp_dataset_endpoint}/rp/dataset ${QUERY_PARAMS_FILE}
+if [ $? -eq 0 ] ; then
+    echo "Unable to upload query parameters file to RP Server"
+    exit 1
+fi
+ 
+
+# submit query job to RP Server
+response=$(python /opt/rp/t2d_portal/submit_job.py --workflow_id ${workflow_id})
+echo ${response}
+
+if [ "$response" == "" ]
+then
+    echo "Invalid response from RP Server after submitting query"
+    exit 1
+fi
+
+# download result of the query job
+job_instance_id=$(echo ${response} | awk -F'=' '{print $2}')
+python /opt/rp/t2d_portal/download_result.py ${job_instance_id} >> ${RESULT_DOWNLOADER_LOG_PATH} 2>&1
+
+# move resul to final destination
+if [ -e "/opt/result.txt" ]
+then
+    mv /opt/result.txt ${RESULT_PATH}
+    if [ $? -eq 0 ] ; then
+        echo "query result generated successfully. Result file is located at: ${RESULT_PATH}"
+        exit 0
+    fi
+else
+    echo "Error in generating query result file"
+    exit 1
+fi

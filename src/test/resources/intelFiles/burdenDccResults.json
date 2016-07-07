@@ -1,0 +1,17 @@
+{"stats":{
+    "ciLower":-1.6880031758978842,
+    "numControls":8466,
+    "pValue":0.041223111600841675,
+    "numCaseCarriers":8,
+    "numInputVariants":13,
+    "numCases":8373,
+    "ciUpper":-0.034288803670617485,
+    "numCaseVariants":8,
+    "ciLevel":0.95,
+    "numControlCarriers":19,
+    "stdError":0.421865911282466,
+    "numControlVariants":19,
+    "beta":-0.8611459897842508
+  },
+  "is_error":false
+}

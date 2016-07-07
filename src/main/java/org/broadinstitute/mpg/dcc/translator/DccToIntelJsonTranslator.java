@@ -8,6 +8,11 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.logging.Logger;
 
 /**
  * Concrete class to translate from the DCC json format to the Intel format
@@ -15,6 +20,7 @@ import javax.json.JsonValue;
  */
 public class DccToIntelJsonTranslator {
     // instance variables
+    Logger translatorLogger = Logger.getLogger(this.getClass().getName());
 
     /**
      * translate from the dcc burden input format to the Intel burden input format
@@ -64,6 +70,74 @@ public class DccToIntelJsonTranslator {
 
         // return
         return intellJsonObject;
+    }
+
+    /**
+     * returns a json object based on a input stream consisting of lines with fomat field=value
+     * @param inputStream
+     * @return
+     * @throws DccServiceException
+     */
+    public JsonObject getBurdenResultFromStream(InputStream inputStream) throws DccServiceException {
+        // local variables
+        JsonObject jsonObject = null;
+        BufferedReader stringReader = null;
+        InputStreamReader inputStreamReader = null;
+        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+        String inputLineString = null;
+
+        // test the input stream
+        if (inputStream == null) {
+            throw new DccServiceException("Got null burden result input stream");
+        }
+
+        // parse the stream with a line reader
+        inputStreamReader = new InputStreamReader(inputStream);
+        stringReader = new BufferedReader(inputStreamReader);
+
+        // for each line
+        try {
+            while ((inputLineString = stringReader.readLine()) != null) {
+                // check line
+                if (inputLineString == null) {
+                    this.translatorLogger.info("got null line in burden result, so skipping");
+                    continue;
+                }
+
+                // parse using the = sign
+                String[] stringArray = null;
+                stringArray = inputLineString.split("=");
+
+                // check array for 2 elements
+                if (stringArray == null) {
+                    this.translatorLogger.info("got null string array in burden result, so skipping");
+                    continue;
+
+                } else if (stringArray.length < 2) {
+                    this.translatorLogger.info("got incorrect line in burden result, so skipping: " + inputLineString);
+                    continue;
+
+                }
+
+                // add to the json object
+                objectBuilder.add(stringArray[0], stringArray[1]);
+            }
+
+            // get the json object results
+            jsonObject = objectBuilder.build();
+
+        } catch (IOException exception) {
+            throw new DccServiceException("Got IO exception with burden stream: " + exception.getMessage());
+        }
+
+        // build the encompassing json object
+        objectBuilder.add("stats", jsonObject);
+        objectBuilder.add("is_error", false);
+        objectBuilder.add("error_message", JsonValue.NULL);
+        jsonObject = objectBuilder.build();
+
+        // return
+        return jsonObject;
     }
 
 }

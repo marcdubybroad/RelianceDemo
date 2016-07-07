@@ -63,4 +63,43 @@ public class DccToIntelJsonTranslatorTest extends TestCase {
         assertNotNull(resultObject);
         assertEquals(expectedObject, resultObject);
     }
+
+    @Test
+    public void testGetBurdenResultFromStream() {
+        // local variables
+        DccToIntelJsonTranslator dccToIntelJsonTranslator = new DccToIntelJsonTranslator();
+
+        // input variables
+        InputStream inputStream = null;
+
+        // expected variables
+        InputStream expectedStream = null;
+        JsonReader expectedReader = null;
+        JsonObject expectedObject = null;
+
+        // result variables
+        JsonObject resultObject = null;
+
+        // get the inputs
+        inputStream = this.getClass().getResourceAsStream("/intelFiles/intelResults.txt");
+        assertNotNull(inputStream);
+
+        // get the expected results
+        expectedStream = this.getClass().getResourceAsStream("/intelFiles/burdenDccResults.json");
+        expectedReader = Json.createReader(expectedStream);
+        expectedObject = expectedReader.readObject();
+        assertNotNull(expectedObject);
+
+        // get the result
+        try {
+            resultObject = dccToIntelJsonTranslator.getBurdenResultFromStream(inputStream);
+
+        } catch (DccServiceException exception) {
+            fail("Got exception reading burden file: " + exception.getMessage());
+        }
+
+        // test
+        assertNotNull(resultObject);
+        assertEquals(expectedObject, resultObject);
+    }
 }
