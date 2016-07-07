@@ -1,17 +1,17 @@
 {"stats":{
-    "ciLower":-1.6880031758978842,
-    "numControls":8466,
-    "pValue":0.041223111600841675,
-    "numCaseCarriers":8,
-    "numInputVariants":13,
-    "numCases":8373,
-    "ciUpper":-0.034288803670617485,
-    "numCaseVariants":8,
+    "numCases":109,
+    "numControls":86,
+    "numCaseCarriers":1,
+    "numControlCarriers":1,
+    "numCaseVariants":1,
+    "numControlVariants":1,
+    "numInputVariants":10,
+    "pValue":0.4699,
+    "beta":-1.0748,
+    "stdError":1.4872,
     "ciLevel":0.95,
-    "numControlCarriers":19,
-    "stdError":0.421865911282466,
-    "numControlVariants":19,
-    "beta":-0.8611459897842508
+    "ciLower":-3.989712,
+    "ciUpper":1.8401120000000002
   },
   "is_error":false
 }
