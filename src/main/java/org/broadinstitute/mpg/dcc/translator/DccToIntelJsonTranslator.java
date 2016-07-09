@@ -12,6 +12,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -85,6 +88,49 @@ public class DccToIntelJsonTranslator {
         InputStreamReader inputStreamReader = null;
         JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
         String inputLineString = null;
+        Map<String, String> stringMap = null;
+        Iterator<String> keyIterator = null;
+
+        // get the string map
+        stringMap = this.getBurdenResultsMapFromStream(inputStream);
+
+        // build the json object
+        keyIterator = stringMap.keySet().iterator();
+
+        while (keyIterator.hasNext()) {
+            String key = keyIterator.next();
+
+            // add to the json object
+            objectBuilder.add(key, stringMap.get(key));
+        }
+
+        // get the json object results
+        jsonObject = objectBuilder.build();
+
+        // build the encompassing json object
+        objectBuilder.add("stats", jsonObject);
+        objectBuilder.add("is_error", false);
+        objectBuilder.add("error_message", JsonValue.NULL);
+        jsonObject = objectBuilder.build();
+
+        // return
+        return jsonObject;
+    }
+
+    /**
+     * translates the burden reslts file intp a map
+     *
+     * @param inputStream
+     * @return
+     * @throws DccServiceException
+     */
+    protected Map<String, String> getBurdenResultsMapFromStream(InputStream inputStream) throws DccServiceException {
+        // local variables
+        BufferedReader stringReader = null;
+        InputStreamReader inputStreamReader = null;
+        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+        String inputLineString = null;
+        Map<String, String> stringMap = new HashMap<String, String>();
 
         // test the input stream
         if (inputStream == null) {
@@ -119,25 +165,15 @@ public class DccToIntelJsonTranslator {
 
                 }
 
-                // add to the json object
-                objectBuilder.add(stringArray[0], stringArray[1]);
+                // add to the map
+                stringMap.put(stringArray[0], stringArray[1]);
             }
-
-            // get the json object results
-            jsonObject = objectBuilder.build();
 
         } catch (IOException exception) {
             throw new DccServiceException("Got IO exception with burden stream: " + exception.getMessage());
         }
 
-        // build the encompassing json object
-        objectBuilder.add("stats", jsonObject);
-        objectBuilder.add("is_error", false);
-        objectBuilder.add("error_message", JsonValue.NULL);
-        jsonObject = objectBuilder.build();
-
-        // return
-        return jsonObject;
+        // return the map
+        return stringMap;
     }
-
 }
