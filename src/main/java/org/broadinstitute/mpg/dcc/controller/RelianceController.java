@@ -28,7 +28,26 @@ public class RelianceController {
         return new Greeting(counter.incrementAndGet(), String.format(template, test + ": " + name));
     }
 
-    @RequestMapping("/burden")
+    @RequestMapping("/burden2")
+    public VariantResultBean burdenResult(@RequestParam(value="name", defaultValue="World") String name) {
+        VariantResultBean resultBean = new VariantResultBean();
+        resultBean.setNumCases(109);
+        resultBean.setNumControls(86);
+        resultBean.setNumCaseCarriers(1);
+        resultBean.setNumControlCarriers(1);
+        resultBean.setNumCaseVariants(1);
+        resultBean.setNumControlVariants(1);
+        resultBean.setNumInputVariants(10);
+        resultBean.setpValue(0.4699);
+        resultBean.setBeta(1.0748);
+        resultBean.setStdError(1.4872);
+        resultBean.setCiLevel(0.95);
+        resultBean.setCiLower(3.989712);
+        resultBean.setCiUpper(1.8401120000000002);
+        return resultBean;
+    }
+
+    @RequestMapping("/burden2")
     public VariantResultBean burdenResult(@RequestParam(value="name", defaultValue="World") String name) {
         VariantResultBean resultBean = new VariantResultBean();
         resultBean.setNumCases(109);
