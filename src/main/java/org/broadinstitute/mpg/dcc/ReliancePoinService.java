@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import org.broadinstitute.mpg.dcc.io.ReliancePointFileAccessor;
 import org.broadinstitute.mpg.dcc.translator.DccToIntelJsonTranslator;
 import org.broadinstitute.mpg.dcc.util.DccServiceException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import javax.json.JsonObject;
 import java.io.InputStream;
@@ -14,13 +16,19 @@ import java.util.Date;
  *
  * Created by mduby on 7/8/16.
  */
+@Service
 public class ReliancePoinService {
     // instance variables
     Logger serviceLogger = Logger.getLogger(this.getClass().getName());
     DccToIntelJsonTranslator dccToIntelJsonTranslator = new DccToIntelJsonTranslator();
 
+    // spring properties
+    @Value("${server.out.results.root.directory}")
+    private String rootResultsDirectoryPath;
+
     // paths and scripts
-    String scriptPath = "/Users/mduby/Apps/WorkspaceIntelliJ/dig-diabetes-portal/RelianceDemo/src/main/python/mockScript.py";
+    @Value("${reliance.point.script}")
+    String scriptPath;
 
     /**
      * process the burden result
@@ -82,6 +90,7 @@ public class ReliancePoinService {
         try {
             Runtime runtime = Runtime.getRuntime();
             Process process = runtime.exec(target);
+            process.waitFor();
 
         } catch (Throwable throwable) {
             this.serviceLogger.error("Got exception running burden test: " + throwable.getMessage());

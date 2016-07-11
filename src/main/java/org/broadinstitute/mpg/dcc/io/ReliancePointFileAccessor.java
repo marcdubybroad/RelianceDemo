@@ -40,12 +40,12 @@ public class ReliancePointFileAccessor {
      */
     protected File createDirectory(String directoryPathString) throws DccServiceException {
         // local variables
-        File file = new File(this.fileDirectoryPath);
+        File file = new File(directoryPathString);
 
         // check for the directory
         if (!file.exists()) {
             // create if not there
-            if (file.mkdir()) {
+            if (file.mkdirs()) {
                 this.fileLogger.info("Directory is created at path: " + file.getAbsolutePath());
 
             } else {
@@ -76,7 +76,7 @@ public class ReliancePointFileAccessor {
         resultFilePath = resultDirectory.getAbsolutePath() + "/results.txt";
 
         try {
-            Json.createWriter(new FileWriter(inputFilePath));
+            jsonWriter = Json.createWriter(new FileWriter(inputFilePath));
 
         } catch (IOException exception) {
             throw new DccServiceException("Got variants.json file writing exception: " + exception.getMessage());

@@ -5,6 +5,9 @@ import org.broadinstitute.mpg.dcc.ReliancePoinService;
 import org.broadinstitute.mpg.dcc.bean.Greeting;
 import org.broadinstitute.mpg.dcc.bean.RestResultBean;
 import org.broadinstitute.mpg.dcc.bean.VariantResultBean;
+import org.broadinstitute.mpg.dcc.util.DccServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,10 +28,16 @@ public class RelianceController {
     // instance variables
     private final Logger controllerLog = Logger.getLogger(this.getClass().getName());
 
+    // spring properties
+    @Value("${server.out.results.root.directory}")
+    private String rootResultsDirectoryPath;
+
     // instance variables
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
-    private ReliancePoinService reliancePoinService = new ReliancePoinService();
+
+    @Autowired
+    ReliancePoinService reliancePoinService;
 
     @RequestMapping("/greeting")
     public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
@@ -67,13 +76,13 @@ public class RelianceController {
         JsonObject inputObject = jsonReader.readObject();
 
         // call the service
-        /*
         try {
-            resultBean = this.reliancePoinService.getBurdenResults(inputObject);
+            JsonObject dude = this.reliancePoinService.getBurdenResults(inputObject);
 
         } catch (DccServiceException exception) {
             this.controllerLog.error("got burden service error: " + exception.getMessage());
         }
+        /*
         */
 
         // return
