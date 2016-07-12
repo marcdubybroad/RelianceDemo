@@ -123,4 +123,53 @@ public class VariantResultBean {
     public void setCiUpper(double ciUpper) {
         this.ciUpper = ciUpper;
     }
+
+    public boolean equals(Object object) {
+        // local variables
+        VariantResultBean otherBean = (VariantResultBean)object;
+
+        // test
+        if (this.getNumCases() != otherBean.getNumCases()) {
+            return false;
+        }
+        if (this.getNumControls() != otherBean.getNumControls()) {
+            return false;
+        }
+        if (this.getNumCaseCarriers() != otherBean.getNumCaseCarriers()) {
+            return false;
+        }
+        if (this.getNumControlCarriers() != otherBean.getNumControlCarriers()) {
+            return false;
+        }
+        if (this.getNumCaseVariants() != otherBean.getNumCaseVariants()) {
+            return false;
+        }
+        if (this.getNumControlVariants() != otherBean.getNumControlVariants()) {
+            return false;
+        }
+        if (this.getNumInputVariants() != otherBean.getNumInputVariants()) {
+            return false;
+        }
+        if (this.getpValue() != otherBean.getpValue()) {
+            return false;
+        }
+        if (this.getBeta() != otherBean.getBeta()) {
+            return false;
+        }
+        if (this.getStdError() != otherBean.getStdError()) {
+            return false;
+        }
+        if (this.getCiLevel() != otherBean.getCiLevel()) {
+            return false;
+        }
+        if (this.getCiLower() != otherBean.getCiLower()) {
+            return false;
+        }
+        if (this.getCiUpper() != otherBean.getCiUpper()) {
+            return false;
+        }
+
+        // if all pass, true
+        return true;
+    }
 }

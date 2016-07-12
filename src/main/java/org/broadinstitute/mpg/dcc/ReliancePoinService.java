@@ -1,6 +1,7 @@
 package org.broadinstitute.mpg.dcc;
 
 import org.apache.log4j.Logger;
+import org.broadinstitute.mpg.dcc.bean.RestResultBean;
 import org.broadinstitute.mpg.dcc.io.ReliancePointFileAccessor;
 import org.broadinstitute.mpg.dcc.translator.DccToIntelJsonTranslator;
 import org.broadinstitute.mpg.dcc.util.DccServiceException;
@@ -37,10 +38,10 @@ public class ReliancePoinService {
      * @return
      * @throws DccServiceException
      */
-    public JsonObject getBurdenResults(JsonObject inputObject) throws DccServiceException {
+    public RestResultBean getBurdenResults(JsonObject inputObject) throws DccServiceException {
         // local variables
         ReliancePointFileAccessor reliancePointFileAccessor = null;
-        JsonObject resultObject = null;
+        RestResultBean resultBean = null;
         JsonObject burdenInputJson = null;
         Date now = new Date();
         InputStream resultStream = null;
@@ -65,10 +66,10 @@ public class ReliancePoinService {
         resultStream = reliancePointFileAccessor.readFile(filePathArray[1]);
 
         // convert the file to a DCC result json file
-        resultObject = this.dccToIntelJsonTranslator.getBurdenResultFromStream(resultStream);
+        resultBean = this.dccToIntelJsonTranslator.getBurdenResultBeanFromStream(resultStream);
 
         // return
-        return resultObject;
+        return resultBean;
     }
 
     /**

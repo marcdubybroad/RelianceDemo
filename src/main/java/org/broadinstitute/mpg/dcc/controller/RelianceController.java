@@ -21,6 +21,8 @@ import java.io.StringReader;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
+ * Controller class to handle the REST query routing
+ *
  * Created by mduby on 6/30/16.
  */
 @RestController
@@ -39,12 +41,24 @@ public class RelianceController {
     @Autowired
     ReliancePoinService reliancePoinService;
 
+    /**
+     * Spring boot example mathod
+     *
+     * @param name
+     * @return
+     */
     @RequestMapping("/greeting")
     public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
         String test = "test";
         return new Greeting(counter.incrementAndGet(), String.format(template, test + ": " + name));
     }
 
+    /**
+     * final constant result method for testing
+     *
+     * @param name
+     * @return
+     */
     @RequestMapping("/burden2")
     public VariantResultBean burdenResult(@RequestParam(value="name", defaultValue="World") String name) {
         VariantResultBean resultBean = new VariantResultBean();
@@ -64,9 +78,15 @@ public class RelianceController {
         return resultBean;
     }
 
+    /**
+     * main burden test mathod for RP
+     *
+     * @param inputString
+     * @return
+     */
     @RequestMapping(value = "/burden", method = RequestMethod.POST)
-    public VariantResultBean burdenResultJson(@RequestBody String inputString) {
-        VariantResultBean resultBean = new VariantResultBean();
+    public RestResultBean burdenResultJson(@RequestBody String inputString) {
+        RestResultBean resultBean = new RestResultBean();
 
         // log
         this.controllerLog.info("Got input json: " + inputString.toString());
@@ -77,7 +97,7 @@ public class RelianceController {
 
         // call the service
         try {
-            JsonObject dude = this.reliancePoinService.getBurdenResults(inputObject);
+            resultBean = this.reliancePoinService.getBurdenResults(inputObject);
 
         } catch (DccServiceException exception) {
             this.controllerLog.error("got burden service error: " + exception.getMessage());
@@ -89,6 +109,12 @@ public class RelianceController {
         return resultBean;
     }
 
+    /**
+     * dummy final method to make sure server up and for testing
+     *
+     * @param name
+     * @return
+     */
     @RequestMapping("/results")
     public RestResultBean burdenResults(@RequestParam(value="name", defaultValue="World") String name) {
         RestResultBean restResultBean = new RestResultBean();

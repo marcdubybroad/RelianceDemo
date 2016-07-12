@@ -1,6 +1,8 @@
 package org.broadinstitute.mpg.dcc;
 
 import junit.framework.TestCase;
+import org.broadinstitute.mpg.dcc.bean.RestResultBean;
+import org.broadinstitute.mpg.dcc.bean.VariantResultBean;
 import org.broadinstitute.mpg.dcc.util.DccServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +18,8 @@ import javax.json.JsonReader;
 import java.io.InputStream;
 
 /**
+ * Unit test for the Reliance Point service class
+ *
  * Created by mduby on 7/11/16.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,33 +41,60 @@ public class ReliancePointServiceTest extends TestCase {
         JsonObject inputObject = null;
 
         // expected variables
-        InputStream expectedStream = null;
-        JsonReader expectedReader = null;
-        JsonObject expectedObject = null;
+        VariantResultBean expectedBean = null;
+        RestResultBean expectedRestResultBean = null;
 
         // result variables
-        JsonObject resultObject = null;
+        RestResultBean restResultBean = null;
 
         // set input variables
         inputDccStream = getClass().getResourceAsStream("/intelFiles/intelVariantsPayload.json");
         inputReader = Json.createReader(inputDccStream);
         inputObject = inputReader.readObject();
 
-        // set expected variables
-        expectedStream = this.getClass().getResourceAsStream("/intelFiles/burdenDccResults.json");
-        expectedReader = Json.createReader(expectedStream);
-        expectedObject = expectedReader.readObject();
+        // get the expected results
+        expectedBean = new VariantResultBean();
+        expectedBean.setNumCases(109);
+        expectedBean.setNumControls(86);
+        expectedBean.setNumCaseCarriers(1);
+        expectedBean.setNumControlCarriers(1);
+        expectedBean.setNumCaseVariants(1);
+        expectedBean.setNumControlVariants(1);
+        expectedBean.setNumInputVariants(10);
+        expectedBean.setpValue(0.4699);
+        expectedBean.setBeta(-1.0748);
+        expectedBean.setStdError(1.4872);
+        expectedBean.setCiLevel(0.95);
+        expectedBean.setCiLower(-3.989712);
+        expectedBean.setCiUpper(1.8401120000000002);
+        expectedRestResultBean = new RestResultBean();
+        expectedRestResultBean.addToResults(expectedBean);
 
         // call the service
         try {
-            resultObject = this.reliancePoinService.getBurdenResults(inputObject);
+            restResultBean = this.reliancePoinService.getBurdenResults(inputObject);
 
         } catch (DccServiceException exception) {
             fail("got error calling service: " + exception.getMessage());
         }
 
         // test
-        assertNotNull(resultObject);
-        assertEquals(expectedObject, resultObject);
+        assertNotNull(restResultBean);
+        assertEquals(expectedRestResultBean.getErrorMessage(), restResultBean.getErrorMessage());
+        assertEquals(expectedRestResultBean.isError(), restResultBean.isError());
+        assertTrue(restResultBean.getResults().size() == 1);
+        assertEquals(expectedRestResultBean.getResults().get(0).getNumCases(), restResultBean.getResults().get(0).getNumCases());
+        assertEquals(expectedRestResultBean.getResults().get(0).getNumControls(), restResultBean.getResults().get(0).getNumControls());
+        assertEquals(expectedRestResultBean.getResults().get(0).getNumCaseCarriers(), restResultBean.getResults().get(0).getNumCaseCarriers());
+        assertEquals(expectedRestResultBean.getResults().get(0).getNumControlCarriers(), restResultBean.getResults().get(0).getNumControlCarriers());
+        assertEquals(expectedRestResultBean.getResults().get(0).getNumCaseVariants(), restResultBean.getResults().get(0).getNumCaseVariants());
+        assertEquals(expectedRestResultBean.getResults().get(0).getNumControlVariants(), restResultBean.getResults().get(0).getNumControlVariants());
+        assertEquals(expectedRestResultBean.getResults().get(0).getNumInputVariants(), restResultBean.getResults().get(0).getNumInputVariants());
+        assertEquals(expectedRestResultBean.getResults().get(0).getpValue(), restResultBean.getResults().get(0).getpValue());
+        assertEquals(expectedRestResultBean.getResults().get(0).getBeta(), restResultBean.getResults().get(0).getBeta());
+        assertEquals(expectedRestResultBean.getResults().get(0).getStdError(), restResultBean.getResults().get(0).getStdError());
+        assertEquals(expectedRestResultBean.getResults().get(0).getCiLevel(), restResultBean.getResults().get(0).getCiLevel());
+        assertEquals(expectedRestResultBean.getResults().get(0).getCiLower(), restResultBean.getResults().get(0).getCiLower());
+        assertEquals(expectedRestResultBean.getResults().get(0).getCiUpper(), restResultBean.getResults().get(0).getCiUpper());
     }
 }

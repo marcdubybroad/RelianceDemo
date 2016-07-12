@@ -1,5 +1,7 @@
 package org.broadinstitute.mpg.dcc.translator;
 
+import org.broadinstitute.mpg.dcc.bean.RestResultBean;
+import org.broadinstitute.mpg.dcc.bean.VariantResultBean;
 import org.broadinstitute.mpg.dcc.util.DccServiceConstants;
 import org.broadinstitute.mpg.dcc.util.DccServiceException;
 
@@ -84,10 +86,7 @@ public class DccToIntelJsonTranslator {
     public JsonObject getBurdenResultFromStream(InputStream inputStream) throws DccServiceException {
         // local variables
         JsonObject jsonObject = null;
-        BufferedReader stringReader = null;
-        InputStreamReader inputStreamReader = null;
         JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
-        String inputLineString = null;
         Map<String, String> stringMap = null;
         Iterator<String> keyIterator = null;
 
@@ -115,6 +114,112 @@ public class DccToIntelJsonTranslator {
 
         // return
         return jsonObject;
+    }
+
+    /**
+     * returns a json object based on a input stream consisting of lines with fomat field=value
+     * @param inputStream
+     * @return
+     * @throws DccServiceException
+     */
+    public RestResultBean getBurdenResultBeanFromStream(InputStream inputStream) throws DccServiceException {
+        // local variables
+        JsonObject jsonObject = null;
+        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+        Map<String, String> stringMap = null;
+        Iterator<String> keyIterator = null;
+        RestResultBean restResultBean = new RestResultBean();
+        VariantResultBean variantResultBean = new VariantResultBean();
+
+        // get the string map
+        stringMap = this.getBurdenResultsMapFromStream(inputStream);
+
+        // build the json object
+        keyIterator = stringMap.keySet().iterator();
+
+        while (keyIterator.hasNext()) {
+            String key = keyIterator.next();
+
+            // add to the json object
+            objectBuilder.add(key, stringMap.get(key));
+        }
+
+        // populate the variant result
+        variantResultBean.setNumCases(this.getSafeIntegerValue(stringMap, DccServiceConstants.Json.NUMBER_CASES_KEY));
+        variantResultBean.setNumControls(this.getSafeIntegerValue(stringMap, DccServiceConstants.Json.NUMBER_CONTROLS_KEY));
+        variantResultBean.setNumCaseCarriers(this.getSafeIntegerValue(stringMap, DccServiceConstants.Json.NUMBER_CASE_CARRIERS_KEY));
+        variantResultBean.setNumControlCarriers(this.getSafeIntegerValue(stringMap, DccServiceConstants.Json.NUMBER_CONTROL_CARRIERS_KEY));
+        variantResultBean.setNumCaseVariants(this.getSafeIntegerValue(stringMap, DccServiceConstants.Json.NUMBER_CASE_VARIANTS_KEY));
+        variantResultBean.setNumControlVariants(this.getSafeIntegerValue(stringMap, DccServiceConstants.Json.NUMBER_CONTROL_VARIANTS_KEY));
+        variantResultBean.setNumInputVariants(this.getSafeIntegerValue(stringMap, DccServiceConstants.Json.NUMBER_INPUT_VARIANTS_KEY));
+        variantResultBean.setpValue(this.getSafeDoubleValue(stringMap, DccServiceConstants.Json.P_VALUE_KEY));
+        variantResultBean.setBeta(this.getSafeDoubleValue(stringMap, DccServiceConstants.Json.BETA_KEY));
+        variantResultBean.setStdError(this.getSafeDoubleValue(stringMap, DccServiceConstants.Json.STANDARD_ERROR__KEY));
+        variantResultBean.setCiLevel(this.getSafeDoubleValue(stringMap, DccServiceConstants.Json.CI_LEVEL_KEY));
+        variantResultBean.setCiLower(this.getSafeDoubleValue(stringMap, DccServiceConstants.Json.CI_LOWER_KEY));
+        variantResultBean.setCiUpper(this.getSafeDoubleValue(stringMap, DccServiceConstants.Json.CI_UPPER_KEY));
+
+        // add the variant bean
+        restResultBean.addToResults(variantResultBean);
+
+        // return
+        return restResultBean;
+    }
+
+    /**
+     * method to return a converted float value from a given string; 0.0 returned if not convertable
+     *
+     * @param map
+     * @param key
+     * @return
+     */
+    protected double getSafeDoubleValue(Map<String, String> map, String key) {
+        // local variables
+        double value = 0.0;
+        String mapValue = null;
+
+        // get the value
+        mapValue = map.get(key);
+
+        if (mapValue != null) {
+            try {
+                value = Double.valueOf(map.get(key));
+
+            } catch (NumberFormatException exception) {
+                // do nothing
+            }
+        }
+
+        // return
+        return value;
+    }
+
+    /**
+     * method to return a converted float value from a given string; 0.0 returned if not convertable
+     *
+     * @param map
+     * @param key
+     * @return
+     */
+    protected int getSafeIntegerValue(Map<String, String> map, String key) {
+        // local variables
+        int value = 0;
+        String mapValue = null;
+
+        // get the value
+        mapValue = map.get(key);
+
+        if (mapValue != null) {
+            try {
+                value = Integer.valueOf(map.get(key));
+
+            } catch (NumberFormatException exception) {
+                // do nothing
+            }
+        }
+
+        // return
+        return value;
     }
 
     /**
