@@ -71,49 +71,8 @@ public class DccToIntelJsonTranslator {
             intellJsonObject = objectBuilder.build();
         }
 
-        // TODO - translate the variant strings
-
         // return
         return intellJsonObject;
-    }
-
-    /**
-     * returns a json object based on a input stream consisting of lines with fomat field=value
-     * @param inputStream
-     * @return
-     * @throws DccServiceException
-     */
-    public JsonObject getBurdenResultFromStream(InputStream inputStream) throws DccServiceException {
-        // local variables
-        JsonObject jsonObject = null;
-        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
-        Map<String, String> stringMap = null;
-        Iterator<String> keyIterator = null;
-
-        // get the string map
-        stringMap = this.getBurdenResultsMapFromStream(inputStream);
-
-        // build the json object
-        keyIterator = stringMap.keySet().iterator();
-
-        while (keyIterator.hasNext()) {
-            String key = keyIterator.next();
-
-            // add to the json object
-            objectBuilder.add(key, stringMap.get(key));
-        }
-
-        // get the json object results
-        jsonObject = objectBuilder.build();
-
-        // build the encompassing json object
-        objectBuilder.add("stats", jsonObject);
-        objectBuilder.add("is_error", false);
-        objectBuilder.add("error_message", JsonValue.NULL);
-        jsonObject = objectBuilder.build();
-
-        // return
-        return jsonObject;
     }
 
     /**

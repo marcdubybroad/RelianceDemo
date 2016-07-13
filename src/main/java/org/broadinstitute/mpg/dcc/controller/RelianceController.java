@@ -2,7 +2,6 @@ package org.broadinstitute.mpg.dcc.controller;
 
 import org.apache.log4j.Logger;
 import org.broadinstitute.mpg.dcc.ReliancePoinService;
-import org.broadinstitute.mpg.dcc.bean.Greeting;
 import org.broadinstitute.mpg.dcc.bean.RestResultBean;
 import org.broadinstitute.mpg.dcc.bean.VariantResultBean;
 import org.broadinstitute.mpg.dcc.util.DccServiceException;
@@ -18,7 +17,6 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.StringReader;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Controller class to handle the REST query routing
@@ -34,24 +32,8 @@ public class RelianceController {
     @Value("${server.out.results.root.directory}")
     private String rootResultsDirectoryPath;
 
-    // instance variables
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
-
     @Autowired
     ReliancePoinService reliancePoinService;
-
-    /**
-     * Spring boot example mathod
-     *
-     * @param name
-     * @return
-     */
-    @RequestMapping("/greeting")
-    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        String test = "test";
-        return new Greeting(counter.incrementAndGet(), String.format(template, test + ": " + name));
-    }
 
     /**
      * final constant result method for testing
