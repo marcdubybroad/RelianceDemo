@@ -9,7 +9,10 @@
  - Switch to project directory: *cd RelianceDemo*
  - Build: *gradle build*
  - Run tests: *gradle test*
- - To run from command line, from the project directory, use 'java -jar build/libs/reliancedemo-0.0.1-SNAPSHOT.jar'
+ - To run the RRST server from the command line:
+   - Switch to the project directory
+   - Build the project
+   - Issue the command 'java -jar build/libs/reliancedemo-0.0.1-SNAPSHOT.jar'
 
 **Configuration:**
  - The file containing the configurations are:
