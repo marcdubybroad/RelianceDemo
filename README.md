@@ -6,7 +6,7 @@
  - Make sure you have Java 8: *java -version*
  - Make sure you have [Gradle](https://gradle.org/downloads)
  - Set you `JAVA_HOME` path to you Java 8 location
- - Set your `GRADLE_HOME` to your gradle location
+ - Set your `GRADLE_HOME` to your Gradle location
  - Add `JAVA_HOME/bin` and `GRADLE_HOME/bin` to your executable path
  - Clone repository: *git clone https://github.com/marcdubybroad/RelianceDemo.git*
  - Switch to project directory: *cd RelianceDemo*
