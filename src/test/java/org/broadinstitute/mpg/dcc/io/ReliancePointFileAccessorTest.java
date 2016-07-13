@@ -37,7 +37,7 @@ public class ReliancePointFileAccessorTest extends TestCase {
 
         // create the directory
         try {
-            directory = reliancePointFileAccessor.createDirectory(rootResultsDirectoryPath + now.getTime());
+            directory = reliancePointFileAccessor.createDirectory(rootResultsDirectoryPath + "/test" + now.getTime());
 
         } catch (DccServiceException exception) {
             fail("got error creating directory: " + exception.getMessage());
