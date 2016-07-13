@@ -9,4 +9,4 @@
  - Switch to project directory: *cd RelianceDemo*
  - Build: *gradle build*
  - Run tests: *gradle test*
- - to run from command line, from the project directory, use 'java -jar build/libs/reliancedemo-0.0.1-SNAPSHOT.jar'
+ - To run from command line, from the project directory, use 'java -jar build/libs/reliancedemo-0.0.1-SNAPSHOT.jar'
