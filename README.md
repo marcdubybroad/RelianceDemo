@@ -19,4 +19,4 @@
    - server.port : to set the REST server port number
    - server.out.results.root.directory: to set the directory where the input and output files will be created
    - reliance.point.script: to set the script that will call be called to calculate the burden results
-     - the script command format is expected to be: <script> <input> <output>
+     - Note: the script command format is expected to be: <script> <input> <output>
