@@ -23,4 +23,4 @@
    - `server.out.results.root.directory`: to set the directory where the input and output files will be created
    - `reliance.point.script`: to set the script that will call be called to calculate the burden results
      - Note: the script command format is expected to be: `script` `input` `output`
- - The file containing the application build parameters is `build.gradle`; the JAR name can be set there.
+ - The file containing the application build parameters is `build.gradle`; the JAR version and base name can be set there.
