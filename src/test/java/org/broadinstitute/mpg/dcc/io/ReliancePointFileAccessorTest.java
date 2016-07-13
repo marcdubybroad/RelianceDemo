@@ -6,6 +6,7 @@ import org.broadinstitute.mpg.dcc.ReliancepointApplication;
 import org.broadinstitute.mpg.dcc.util.DccServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -23,16 +24,20 @@ public class ReliancePointFileAccessorTest extends TestCase {
     // instance variables
     Logger testLog = Logger.getLogger(this.getClass().getName());
 
+    // spring properties
+    @Value("${server.out.results.root.directory}")
+    private String rootResultsDirectoryPath;
+
     @Test
     public void testCreateDirectory() {
         // instance variables
         Date now = new Date();
-        ReliancePointFileAccessor reliancePointFileAccessor = new ReliancePointFileAccessor("/Users/mduby/Scratch/Intel/test", now.getTime());
+        ReliancePointFileAccessor reliancePointFileAccessor = new ReliancePointFileAccessor(rootResultsDirectoryPath, now.getTime());
         File directory = null;
 
         // create the directory
         try {
-            directory = reliancePointFileAccessor.createDirectory("/Users/mduby/Scratch/Intel/test/" + now.getTime());
+            directory = reliancePointFileAccessor.createDirectory(rootResultsDirectoryPath + now.getTime());
 
         } catch (DccServiceException exception) {
             fail("got error creating directory: " + exception.getMessage());

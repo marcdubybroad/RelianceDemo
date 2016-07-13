@@ -56,7 +56,7 @@ public class ReliancePoinService {
         burdenInputJson = this.dccToIntelJsonTranslator.getIntelInputJson(inputObject);
 
         // create the new directory and input file
-        reliancePointFileAccessor = new ReliancePointFileAccessor("/Users/mduby/Scratch/Burden", now.getTime());
+        reliancePointFileAccessor = new ReliancePointFileAccessor(rootResultsDirectoryPath, now.getTime());
         filePathArray = reliancePointFileAccessor.writeVariantFile(burdenInputJson);
 
         // run the process
