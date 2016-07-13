@@ -10,7 +10,12 @@
  - Add `JAVA_HOME/bin` and `GRADLE_HOME/bin` to your executable path
  - Clone repository: *git clone https://github.com/marcdubybroad/RelianceDemo.git*
  - Switch to project directory: *cd RelianceDemo*
+ - Modify the application and unit test configuration files:
+   - Change the `server.out.results.root.directory` setting to an appropriate directory with write privileges
+   - Change the `reliance.point.script` setting to the path of the mock script
+     - A sample mock script is provided at `src/main/python/mockScript.py`
  - Build: *gradle build*
+   - This will download all the dependent librarues from the internet the first time
  - Run tests: *gradle test*
  - To run the RRST server from the command line:
    - Switch to the project directory
