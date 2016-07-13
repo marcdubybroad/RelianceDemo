@@ -10,3 +10,9 @@
  - Build: *gradle build*
  - Run tests: *gradle test*
  - To run from command line, from the project directory, use 'java -jar build/libs/reliancedemo-0.0.1-SNAPSHOT.jar'
+
+**Configuration:**
+ - The file containing the configurations are:
+ ..- For the application: 
+..- For the unit tests: 
+ - Make sure you have [Gradle](https://gradle.org/downloads)
