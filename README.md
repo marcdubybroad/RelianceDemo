@@ -9,6 +9,4 @@
  - Switch to project directory: *cd RelianceDemo*
  - Build: *gradle build*
  - Run tests: *gradle test*
- - (Optional#1) Generate executable for IntelliJ IDEA project: *gradle idea*
- - (Optional#2) Launch IntelliJ by clicking on the .ipr file generated via the previous step
- - to run from command line, use 'gradle jettyRunWar'
+ - to run from command line, from the project directory, use 'java -jar build/libs/reliancedemo-0.0.1-SNAPSHOT.jar'
