@@ -8,7 +8,7 @@ print 'input file:', str(sys.argv[1])
 outputFile = str(sys.argv[2])
 print 'output file:', outputFile
 
-with open(outputFile, 'w') as f:
+with open('/Users/mduby/Apps/WorkspaceIntelliJ/dig-diabetes-portal/RelianceDemo/' + outputFile, 'w') as f:
     f.write("%s\n" % str('numCases=109'))
     f.write("%s\n" % str('numControls=86'))
     f.write("%s\n" % str('numCaseCarriers=1'))

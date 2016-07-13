@@ -15,6 +15,8 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Concrete test class to verify the json translations
@@ -130,5 +132,59 @@ public class DccToIntelJsonTranslatorTest extends TestCase {
         assertEquals(expectedRestResultBean.getResults().get(0).getCiLower(), restResultBean.getResults().get(0).getCiLower());
         assertEquals(expectedRestResultBean.getResults().get(0).getCiUpper(), restResultBean.getResults().get(0).getCiUpper());
 
+    }
+
+    /**
+     * method to test the safe double accessor method
+     *
+     */
+    @Test
+    public void testGetSafeDoubleValue() {
+        // local variables
+        double resultDouble = -1;
+        Map<String, String> tempMap = new HashMap<String, String>();
+        String key = "key";
+        DccToIntelJsonTranslator dccToIntelJsonTranslator = new DccToIntelJsonTranslator();
+
+        // test for null entry
+        resultDouble = dccToIntelJsonTranslator.getSafeDoubleValue(tempMap, key);
+        assertEquals(0.0, resultDouble);
+
+        // test for badly formatted number
+        tempMap.put(key, "29292hht");
+        resultDouble = dccToIntelJsonTranslator.getSafeDoubleValue(tempMap, key);
+        assertEquals(0.0, resultDouble);
+
+        // test for real number
+        tempMap.put(key, "12.345");
+        resultDouble = dccToIntelJsonTranslator.getSafeDoubleValue(tempMap, key);
+        assertEquals(12.345, resultDouble);
+    }
+
+    /**
+     * method to test the safe double accessor method
+     *
+     */
+    @Test
+    public void testGetSafeIntegerValue() {
+        // local variables
+        int resultInteger = -1;
+        Map<String, String> tempMap = new HashMap<String, String>();
+        String key = "key";
+        DccToIntelJsonTranslator dccToIntelJsonTranslator = new DccToIntelJsonTranslator();
+
+        // test for null entry
+        resultInteger = dccToIntelJsonTranslator.getSafeIntegerValue(tempMap, key);
+        assertEquals(0, resultInteger);
+
+        // test for badly formatted number
+        tempMap.put(key, "29292hht");
+        resultInteger = dccToIntelJsonTranslator.getSafeIntegerValue(tempMap, key);
+        assertEquals(0, resultInteger);
+
+        // test for real number
+        tempMap.put(key, "12345");
+        resultInteger = dccToIntelJsonTranslator.getSafeIntegerValue(tempMap, key);
+        assertEquals(12345, resultInteger);
     }
 }
