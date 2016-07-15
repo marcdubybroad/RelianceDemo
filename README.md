@@ -32,3 +32,7 @@
    - `reliance.point.script`: to set the script that will call be called to calculate the burden results
      - Note: the script command format is expected to be: `script` `input` `output`
  - The file containing the application build parameters is `build.gradle`; the JAR version and base name can be set there.
+
+**Testing**
+- Samplejson payload for a POST request to the server is located at:
+  - https://github.com/marcdubybroad/RelianceDemo/blob/master/src/test/resources/intelFiles/burdenInputPayload.json
