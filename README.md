@@ -34,5 +34,5 @@
  - The file containing the application build parameters is `build.gradle`; the JAR version and base name can be set there.
 
 **Testing**
-- Samplejson payload for a POST request to the server is located at:
-  - https://github.com/marcdubybroad/RelianceDemo/blob/master/src/test/resources/intelFiles/burdenInputPayload.json
+- Sample json payload for a POST request to the server is located at:
+  - src/test/resources/intelFiles/burdenInputPayload.json
