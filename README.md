@@ -12,12 +12,12 @@
  - Switch to project directory: *cd RelianceDemo*
  - Modify the application and unit test configuration files (see Configuration section below):
    - Change the `server.out.results.root.directory` setting to the absolute path of a directory with write privileges
-   - Change the `reliance.point.script` setting to the absolute path of the mock script
+   - Change the `reliance.point.script` setting to the absolute path of the script to be used
      - A sample mock script is provided at `src/main/python/mockScript.py`
  - Build: *gradle build*
    - This will download all the dependent librarues from the internet the first time
  - Run tests: *gradle test*
- - To run the RRST server from the command line:
+ - To run the REST server from the command line:
    - Switch to the project directory
    - Build the project
    - Issue the command 'java -jar build/libs/reliancedemo-0.1.jar'
