@@ -39,4 +39,4 @@
 - Sample json payload for a POST request to the server is located at:
   - src/test/resources/intelFiles/burdenInputPayload.json
 - Make sure the `src/main/resources/application.properties` and the `src/test/resources/application.properties` files are update for the locations of the script and the results file directory
-- Note: The build has been tested with gradle 1.10 and 2.2.1; gradle 2.11 gave me some jsk7 error
+- Note: The build has been tested with gradle 1.10 and 2.2.1; gradle 2.11 gave me some jdk7 error
