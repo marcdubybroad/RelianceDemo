@@ -23,6 +23,8 @@
    - Issue the command 'java -jar build/libs/reliancedemo-0.1.jar'
 
 **Configuration:**
+ - A `envSetup.txt` file was added to the root directory to help set up java and gradle locations. Simply modify the file and run the following command in a Unix shell:
+   - `. ./envSetup.txt`
  - The file containing the application configurations are:
    - For the application: `src/main/resources/application.properties`
    - For the unit tests: `src/test/resources/application.properties`
@@ -37,4 +39,4 @@
 - Sample json payload for a POST request to the server is located at:
   - src/test/resources/intelFiles/burdenInputPayload.json
 - Make sure the `src/main/resources/application.properties` and the `src/test/resources/application.properties` files are update for the locations of the script and the results file directory
-- Note: Gradle 1.10 ws used to build the project; Gradle 2.* might cause issues
+- Note: The build has been tested with gradle 1.10 and 2.2.1; gradle 2.11 gave me some jsk7 error
