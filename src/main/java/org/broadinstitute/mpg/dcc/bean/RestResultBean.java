@@ -1,16 +1,15 @@
 package org.broadinstitute.mpg.dcc.bean;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
+ * Bean to house the burden test results
+ *
  * Created by mduby on 7/3/16.
  */
 public class RestResultBean {
     // instance variables
     private boolean error;
     private String errorMessage;
-    private List<VariantResultBean> stats;
+    private VariantResultBean stats;
 
     public boolean isError() {
         return error;
@@ -28,16 +27,11 @@ public class RestResultBean {
         this.errorMessage = errorMessage;
     }
 
-    public List<VariantResultBean> getStats() {
+    public VariantResultBean getStats() {
         return stats;
     }
 
-    public void addToResults(VariantResultBean bean) {
-        if (this.stats == null) {
-            this.stats = new ArrayList<VariantResultBean>();
-        }
-
-        // add the bean
-        this.stats.add(bean);
+    public void setStats(VariantResultBean variantBean) {
+        this.stats = variantBean;
     }
 }

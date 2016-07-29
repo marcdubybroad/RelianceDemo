@@ -119,7 +119,7 @@ public class RelianceController {
         resultBean.setCiLevel(0.95);
         resultBean.setCiLower(3.989712);
         resultBean.setCiUpper(1.8401120000000002);
-        restResultBean.addToResults(resultBean);
+        restResultBean.setStats(resultBean);
 
         // add second bean
         resultBean = new VariantResultBean();
@@ -132,7 +132,7 @@ public class RelianceController {
         resultBean.setNumInputVariants(10);
         resultBean.setpValue(0.4699);
         resultBean.setBeta(1.0748);
-        restResultBean.addToResults(resultBean);
+        restResultBean.setStats(resultBean);
 
         // return
         return restResultBean;

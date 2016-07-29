@@ -103,7 +103,7 @@ public class DccToIntelJsonTranslatorTest extends TestCase {
         expectedBean.setCiLower(-3.989712);
         expectedBean.setCiUpper(1.8401120000000002);
         expectedRestResultBean = new RestResultBean();
-        expectedRestResultBean.addToResults(expectedBean);
+        expectedRestResultBean.setStats(expectedBean);
 
         // get the result
         try {
@@ -117,20 +117,20 @@ public class DccToIntelJsonTranslatorTest extends TestCase {
         assertNotNull(restResultBean);
         assertEquals(expectedRestResultBean.getErrorMessage(), restResultBean.getErrorMessage());
         assertEquals(expectedRestResultBean.isError(), restResultBean.isError());
-        assertTrue(restResultBean.getStats().size() == 1);
-        assertEquals(expectedRestResultBean.getStats().get(0).getNumCases(), restResultBean.getStats().get(0).getNumCases());
-        assertEquals(expectedRestResultBean.getStats().get(0).getNumControls(), restResultBean.getStats().get(0).getNumControls());
-        assertEquals(expectedRestResultBean.getStats().get(0).getNumCaseCarriers(), restResultBean.getStats().get(0).getNumCaseCarriers());
-        assertEquals(expectedRestResultBean.getStats().get(0).getNumControlCarriers(), restResultBean.getStats().get(0).getNumControlCarriers());
-        assertEquals(expectedRestResultBean.getStats().get(0).getNumCaseVariants(), restResultBean.getStats().get(0).getNumCaseVariants());
-        assertEquals(expectedRestResultBean.getStats().get(0).getNumControlVariants(), restResultBean.getStats().get(0).getNumControlVariants());
-        assertEquals(expectedRestResultBean.getStats().get(0).getNumInputVariants(), restResultBean.getStats().get(0).getNumInputVariants());
-        assertEquals(expectedRestResultBean.getStats().get(0).getpValue(), restResultBean.getStats().get(0).getpValue());
-        assertEquals(expectedRestResultBean.getStats().get(0).getBeta(), restResultBean.getStats().get(0).getBeta());
-        assertEquals(expectedRestResultBean.getStats().get(0).getStdError(), restResultBean.getStats().get(0).getStdError());
-        assertEquals(expectedRestResultBean.getStats().get(0).getCiLevel(), restResultBean.getStats().get(0).getCiLevel());
-        assertEquals(expectedRestResultBean.getStats().get(0).getCiLower(), restResultBean.getStats().get(0).getCiLower());
-        assertEquals(expectedRestResultBean.getStats().get(0).getCiUpper(), restResultBean.getStats().get(0).getCiUpper());
+        assertNotNull(restResultBean.getStats());
+        assertEquals(expectedRestResultBean.getStats().getNumCases(), restResultBean.getStats().getNumCases());
+        assertEquals(expectedRestResultBean.getStats().getNumControls(), restResultBean.getStats().getNumControls());
+        assertEquals(expectedRestResultBean.getStats().getNumCaseCarriers(), restResultBean.getStats().getNumCaseCarriers());
+        assertEquals(expectedRestResultBean.getStats().getNumControlCarriers(), restResultBean.getStats().getNumControlCarriers());
+        assertEquals(expectedRestResultBean.getStats().getNumCaseVariants(), restResultBean.getStats().getNumCaseVariants());
+        assertEquals(expectedRestResultBean.getStats().getNumControlVariants(), restResultBean.getStats().getNumControlVariants());
+        assertEquals(expectedRestResultBean.getStats().getNumInputVariants(), restResultBean.getStats().getNumInputVariants());
+        assertEquals(expectedRestResultBean.getStats().getpValue(), restResultBean.getStats().getpValue());
+        assertEquals(expectedRestResultBean.getStats().getBeta(), restResultBean.getStats().getBeta());
+        assertEquals(expectedRestResultBean.getStats().getStdError(), restResultBean.getStats().getStdError());
+        assertEquals(expectedRestResultBean.getStats().getCiLevel(), restResultBean.getStats().getCiLevel());
+        assertEquals(expectedRestResultBean.getStats().getCiLower(), restResultBean.getStats().getCiLower());
+        assertEquals(expectedRestResultBean.getStats().getCiUpper(), restResultBean.getStats().getCiUpper());
 
     }
 

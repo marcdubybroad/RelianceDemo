@@ -119,7 +119,7 @@ public class DccToIntelJsonTranslator {
         variantResultBean.setCiUpper(this.getSafeDoubleValue(stringMap, DccServiceConstants.Json.CI_UPPER_KEY));
 
         // add the variant bean
-        restResultBean.addToResults(variantResultBean);
+        restResultBean.setStats(variantResultBean);
 
         // return
         return restResultBean;
