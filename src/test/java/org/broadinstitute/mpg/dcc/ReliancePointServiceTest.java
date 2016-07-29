@@ -82,19 +82,19 @@ public class ReliancePointServiceTest extends TestCase {
         assertNotNull(restResultBean);
         assertEquals(expectedRestResultBean.getErrorMessage(), restResultBean.getErrorMessage());
         assertEquals(expectedRestResultBean.isError(), restResultBean.isError());
-        assertTrue(restResultBean.getResults().size() == 1);
-        assertEquals(expectedRestResultBean.getResults().get(0).getNumCases(), restResultBean.getResults().get(0).getNumCases());
-        assertEquals(expectedRestResultBean.getResults().get(0).getNumControls(), restResultBean.getResults().get(0).getNumControls());
-        assertEquals(expectedRestResultBean.getResults().get(0).getNumCaseCarriers(), restResultBean.getResults().get(0).getNumCaseCarriers());
-        assertEquals(expectedRestResultBean.getResults().get(0).getNumControlCarriers(), restResultBean.getResults().get(0).getNumControlCarriers());
-        assertEquals(expectedRestResultBean.getResults().get(0).getNumCaseVariants(), restResultBean.getResults().get(0).getNumCaseVariants());
-        assertEquals(expectedRestResultBean.getResults().get(0).getNumControlVariants(), restResultBean.getResults().get(0).getNumControlVariants());
-        assertEquals(expectedRestResultBean.getResults().get(0).getNumInputVariants(), restResultBean.getResults().get(0).getNumInputVariants());
-        assertEquals(expectedRestResultBean.getResults().get(0).getpValue(), restResultBean.getResults().get(0).getpValue());
-        assertEquals(expectedRestResultBean.getResults().get(0).getBeta(), restResultBean.getResults().get(0).getBeta());
-        assertEquals(expectedRestResultBean.getResults().get(0).getStdError(), restResultBean.getResults().get(0).getStdError());
-        assertEquals(expectedRestResultBean.getResults().get(0).getCiLevel(), restResultBean.getResults().get(0).getCiLevel());
-        assertEquals(expectedRestResultBean.getResults().get(0).getCiLower(), restResultBean.getResults().get(0).getCiLower());
-        assertEquals(expectedRestResultBean.getResults().get(0).getCiUpper(), restResultBean.getResults().get(0).getCiUpper());
+        assertTrue(restResultBean.getStats().size() == 1);
+        assertEquals(expectedRestResultBean.getStats().get(0).getNumCases(), restResultBean.getStats().get(0).getNumCases());
+        assertEquals(expectedRestResultBean.getStats().get(0).getNumControls(), restResultBean.getStats().get(0).getNumControls());
+        assertEquals(expectedRestResultBean.getStats().get(0).getNumCaseCarriers(), restResultBean.getStats().get(0).getNumCaseCarriers());
+        assertEquals(expectedRestResultBean.getStats().get(0).getNumControlCarriers(), restResultBean.getStats().get(0).getNumControlCarriers());
+        assertEquals(expectedRestResultBean.getStats().get(0).getNumCaseVariants(), restResultBean.getStats().get(0).getNumCaseVariants());
+        assertEquals(expectedRestResultBean.getStats().get(0).getNumControlVariants(), restResultBean.getStats().get(0).getNumControlVariants());
+        assertEquals(expectedRestResultBean.getStats().get(0).getNumInputVariants(), restResultBean.getStats().get(0).getNumInputVariants());
+        assertEquals(expectedRestResultBean.getStats().get(0).getpValue(), restResultBean.getStats().get(0).getpValue());
+        assertEquals(expectedRestResultBean.getStats().get(0).getBeta(), restResultBean.getStats().get(0).getBeta());
+        assertEquals(expectedRestResultBean.getStats().get(0).getStdError(), restResultBean.getStats().get(0).getStdError());
+        assertEquals(expectedRestResultBean.getStats().get(0).getCiLevel(), restResultBean.getStats().get(0).getCiLevel());
+        assertEquals(expectedRestResultBean.getStats().get(0).getCiLower(), restResultBean.getStats().get(0).getCiLower());
+        assertEquals(expectedRestResultBean.getStats().get(0).getCiUpper(), restResultBean.getStats().get(0).getCiUpper());
     }
 }

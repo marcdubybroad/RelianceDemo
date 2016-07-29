@@ -10,7 +10,7 @@ public class RestResultBean {
     // instance variables
     private boolean error;
     private String errorMessage;
-    private List<VariantResultBean> results;
+    private List<VariantResultBean> stats;
 
     public boolean isError() {
         return error;
@@ -28,16 +28,16 @@ public class RestResultBean {
         this.errorMessage = errorMessage;
     }
 
-    public List<VariantResultBean> getResults() {
-        return results;
+    public List<VariantResultBean> getStats() {
+        return stats;
     }
 
     public void addToResults(VariantResultBean bean) {
-        if (this.results == null) {
-            this.results = new ArrayList<VariantResultBean>();
+        if (this.stats == null) {
+            this.stats = new ArrayList<VariantResultBean>();
         }
 
         // add the bean
-        this.results.add(bean);
+        this.stats.add(bean);
     }
 }
