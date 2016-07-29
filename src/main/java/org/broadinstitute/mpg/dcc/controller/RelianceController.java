@@ -66,7 +66,7 @@ public class RelianceController {
      * @param inputString
      * @return
      */
-    @RequestMapping(value = "/burden", method = RequestMethod.POST)
+    @RequestMapping(value = "/burden/v1", method = RequestMethod.POST)
     public RestResultBean burdenResultJson(@RequestBody String inputString) {
         RestResultBean resultBean = new RestResultBean();
 
