@@ -75,6 +75,11 @@ public class ReliancePointFileAccessor {
         inputFilePath = resultDirectory.getAbsolutePath() + "/variants.json";
         resultFilePath = resultDirectory.getAbsolutePath() + "/results.txt";
 
+        // log
+        this.fileLogger.info("got variant json objec to write: " + burdenInputJson);
+        this.fileLogger.info("writing variant json object to file: " + inputFilePath);
+        this.fileLogger.info("Expecting results to be in file: " + resultFilePath);
+
         try {
             jsonWriter = Json.createWriter(new FileWriter(inputFilePath));
 
