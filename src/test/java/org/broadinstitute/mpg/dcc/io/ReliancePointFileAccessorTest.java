@@ -11,7 +11,13 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Date;
 
 /**
@@ -51,5 +57,58 @@ public class ReliancePointFileAccessorTest extends TestCase {
 
         // log
         this.testLog.info("created directory: " + directory.getAbsolutePath());
+    }
+
+    @Test
+    public void testwriteVariantFile() {
+        // local variables
+        Date now = new Date();
+        ReliancePointFileAccessor reliancePointFileAccessor = new ReliancePointFileAccessor(rootResultsDirectoryPath, now.getTime());
+        InputStream expectedStream = null;
+        JsonReader expectedReader = null;
+        JsonObject expectedObject = null;
+        InputStream resultStream = null;
+        JsonReader resultReader = null;
+        JsonObject resultObject = null;
+        String[] resultArray = null;
+
+        // load the expected file results
+        expectedStream = this.getClass().getResourceAsStream("/intelFiles/variants.json");
+        assertNotNull(expectedStream);
+        expectedReader = Json.createReader(expectedStream);
+        expectedObject = expectedReader.readObject();
+        assertNotNull(expectedObject);
+
+        // write out the file
+        try {
+            resultArray = reliancePointFileAccessor.writeVariantFile(expectedObject);
+
+        } catch (DccServiceException exception) {
+            fail("Got variant file writing error: " + exception.getMessage());
+        }
+
+        // test
+        assertNotNull(resultArray);
+        assertEquals(2, resultArray.length);
+        assertNotNull(resultArray[0]);
+        assertNotNull(resultArray[1]);
+        assertTrue(resultArray[0].length() > 0);
+        assertTrue(resultArray[1].length() > 0);
+
+        // load result file
+        try {
+            resultStream = new FileInputStream(resultArray[0]);
+
+        } catch (FileNotFoundException exception) {
+            fail("got error reading json file: " + exception.getMessage());
+        }
+//        assertNotNull("/Users/mduby/Scratch/Burden/test1470256036181/variants.json");
+        assertNotNull(resultStream);
+        resultReader = Json.createReader(resultStream);
+        resultObject = resultReader.readObject();
+
+        // compare
+        assertNotNull(resultObject);
+        assertEquals(expectedObject.toString(), resultObject.toString());
     }
 }

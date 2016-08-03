@@ -84,6 +84,7 @@ public class ReliancePointFileAccessor {
 
         // write the input file
         jsonWriter.writeObject(burdenInputJson);
+        jsonWriter.close();
 
         // create the string array
         filePathStringArray[0] = inputFilePath;
