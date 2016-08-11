@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.servlet.http.HttpServletRequest;
 import java.io.StringReader;
 
 /**
@@ -67,11 +68,19 @@ public class RelianceController {
      * @return
      */
     @RequestMapping(value = "/burden/v1", method = RequestMethod.POST)
-    public RestResultBean burdenResultJson(@RequestBody String inputString) {
+    public RestResultBean burdenResultJson(@RequestBody String inputString, HttpServletRequest request) {
         RestResultBean resultBean = new RestResultBean();
 
-        // log
+        // log request information
+        if (request != null) {
+            controllerLog.info("got burden request from remote host: " + request.getRemoteHost() + " with IP: " + request.getRemoteAddr());
+        }
+
+        // log inpt payload
         this.controllerLog.info("Got input json: " + inputString.toString());
+
+        /// test tyo make sure ERROR gets to file log
+//        this.controllerLog.error("ERROR TEST!!!!!!!!!!!!!!!!!!");
 
         // build the json object
         JsonReader jsonReader = Json.createReader(new StringReader(inputString));

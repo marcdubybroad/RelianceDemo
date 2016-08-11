@@ -84,14 +84,26 @@ public class ReliancePoinService {
         // local variables
         String target = scriptPath + " " + inputFilePath + " " + outputFilePath;
 
+
         // log
+        this.serviceLogger.info("RP script being run is: " + scriptPath);
+        this.serviceLogger.info("Input file is: " + inputFilePath);
+        this.serviceLogger.info("Output file will be: " + outputFilePath);
         this.serviceLogger.info("Running command: '" + target + "'");
 
         // run the process
         try {
             Runtime runtime = Runtime.getRuntime();
+
+            // log start
+            this.serviceLogger.info("RP process started");
+
+            // run
             Process process = runtime.exec(target);
             process.waitFor();
+
+            // log end
+            this.serviceLogger.info("RP process completed");
 
         } catch (Throwable throwable) {
             this.serviceLogger.error("Got exception running burden test: " + throwable.getMessage());
